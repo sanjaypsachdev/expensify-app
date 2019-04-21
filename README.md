@@ -3,27 +3,27 @@
 My first React.js project.
 In this project we show a list of expenses. The user can view, add, edit and delete expenses.
 
+## Prerequisites
+
+The project was built with Node.js version 11.14.0. Besides, we also need yarn v1.1.5.2 installed globally.
+
 ## Getting Started
 
-Please clone the project and in order to install the required dependencies, run the below command from the root directory :
+In order to install the required dependencies, run the below command from the root directory :
 
-yarn install
+  yarn install
 
 In order to run, please execute the below command from the root directory, to be able to run it in development mode locally :
 
-yarn dev-server
+  yarn dev-server
 
 In order to run the tests run the below command :
 
-yarn test --watch
+  yarn test --watch
 
 In order to build a production artifact for deploying on the server, run the below command :
 
-yarn build
-
-### Prerequisites
-
-The project was built with Node.js version 11.14.0. Besides, we also need yarn v1.1.5.2 installed globally.
+  yarn build
 
 ### Installing
 
