@@ -81,9 +81,9 @@ const db = app.firestore();
 
 const expensesFs = db.collection("expenses")
 
+export { firebase, expensesFs, db, database as default };
 
-export { firebase, expensesFs, database as default };
-
+// let sanjayDocRef;
 // sanjayDocRef.set(
 //   {
 //     name: "Sanjay Prakash Sachdev",

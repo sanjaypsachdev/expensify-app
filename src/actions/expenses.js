@@ -18,16 +18,23 @@ export const startAddExpense = (expenseData = {}) => {
 
     const expense = { description, note, amount, createdAt };
 
-    return realtimeDb.ref('expenses')
-      .push(expense)
-      .then(
-        expensesFs
-          .add(expense)
-          .then((docRef) => dispatch(addExpense({
-            id: docRef.id,
-            ...expense
-          })))
-      )
+    return expensesFs
+      .add(expense)
+      .then((docRef) => {
+        dispatch(addExpense({
+          id: docRef.id,
+          ...expense
+        }));
+      });
+
+    // return realtimeDb.ref('expenses')
+    //   .push(expense)
+    //   .then((ref) => {
+    //     dispatch(addExpense({
+    //       id: ref.id,
+    //       ...expense
+    //     }));
+    //   });
   };
 };
 
@@ -43,3 +50,26 @@ export const editExpense = (id, updates) => ({
   id,
   updates
 });
+
+export const setExpenses = (expenses) => ({
+  type: 'SET_EXPENSES',
+  expenses
+});
+
+export const startSetExpenses = () => {
+  return (dispatch) => {
+    //return realtimeDb.ref('expenses').once('value').then((snapshot) => {
+    return expensesFs.get().then((snapshot) => {
+      const expenses = [];
+
+      snapshot.forEach((childSnapshot) => {
+        expenses.push({
+          id: childSnapshot.id,
+          ...childSnapshot.data()
+        });
+      });
+
+      dispatch(setExpenses(expenses));
+    });
+  };
+};
