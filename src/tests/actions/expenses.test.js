@@ -74,7 +74,7 @@ test('should add expense to database and store', (done) => {
       }
     });
 
-    return expensesFs.doc(actions[0].expense.id).get()
+    return expensesFs.doc(actions[0].expense.id).get();
   })
   .then((doc) => {
     expect(doc.data()).toEqual(expenseData);
@@ -101,7 +101,7 @@ test('should add expense with defaults to database and store', (done) => {
         }
       });
 
-      return expensesFs.doc(actions[0].expense.id).get()
+      return expensesFs.doc(actions[0].expense.id).get();
   })
   .then((doc) => {
     expect(doc.data()).toEqual(expenseData);
@@ -139,7 +139,7 @@ test('should delete expense from database and store', (done) => {
         id
       });
 
-      return expensesFs.doc(id).get()
+      return expensesFs.doc(id).get();
   })
   .then((doc) => {
     expect(doc.data()).toEqual(undefined);
@@ -164,7 +164,8 @@ test('should edit expense from database and store', (done) => {
         updates
       });
 
-      return expensesFs.doc(id).get()
+      //return database.ref(`expenses/${id}`).once('value');
+      return expensesFs.doc(id).get();
   })
   .then((doc) => {
     expect(doc.data()).toEqual(updates);
