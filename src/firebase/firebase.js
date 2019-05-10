@@ -1,6 +1,7 @@
 import firebase from 'firebase/app';
 import 'firebase/firebase-database';
 import 'firebase/firebase-firestore';
+import 'firebase/auth';
 
 const config = {
   apiKey: process.env.FIREBASE_API_KEY,
@@ -14,6 +15,7 @@ const config = {
 const app = firebase.initializeApp(config);
 
 const database = app.database();
+const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
 
 // const attributes = {
 //   height: 168,
@@ -81,7 +83,7 @@ const db = app.firestore();
 
 const expensesFs = db.collection("expenses")
 
-export { firebase, expensesFs, db, database as default };
+export { firebase, googleAuthProvider, expensesFs, db, database as default };
 
 // let sanjayDocRef;
 // sanjayDocRef.set(
