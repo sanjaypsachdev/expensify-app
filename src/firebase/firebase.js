@@ -81,7 +81,7 @@ const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
 
 const db = app.firestore();
 
-const expensesFs = db.collection("expenses")
+const expensesFs = (uid) => db.collection("users").doc(uid).collection("expenses");
 
 export { firebase, googleAuthProvider, expensesFs, db, database as default };
 

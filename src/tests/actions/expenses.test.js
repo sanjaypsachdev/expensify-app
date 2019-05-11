@@ -12,19 +12,21 @@ import {
 import expenses from '../fixtures/expenses';
 import database, { expensesFs, db } from '../../firebase/firebase';
 
+const uid = 'thisismytestuid';
+const defaultAuthState = { auth: { uid } };
 const createMockStore = configureStore([thunk]);
 
 beforeEach((done) => {
   //const expenseData = {};
   let batch = db.batch();
   expenses.forEach(({ id, description, note, amount, createdAt }) => {
-    let docRef = expensesFs.doc(id);
+    let docRef = expensesFs(uid).doc(id);
     batch.set(docRef, { description, note, amount, createdAt });
     //expenseData[id] = { description, note, amount, createdAt };
   });
   batch.commit()
        .then(() => done());
-  //database.ref('expenses').set(expenseData).then(() => done());
+  //database.ref(`users/${uid}/expenses`).set(expenseData).then(() => done());
 });
 
 test('should setup remove expense action object', () => {
@@ -56,7 +58,7 @@ test('should setup add expense action object with provided values', () => {
 });
 
 test('should add expense to database and store', (done) => {
-  const store = createMockStore({});
+  const store = createMockStore(defaultAuthState);
   const expenseData = {
     description: 'Mouse',
     amount: 3000,
@@ -74,16 +76,17 @@ test('should add expense to database and store', (done) => {
       }
     });
 
-    return expensesFs.doc(actions[0].expense.id).get();
+    // return database.ref(`users/${uid}/expenses/${actions[0].expense.id}`).once('value)
+    return expensesFs(uid).doc(actions[0].expense.id).get();
   })
   .then((doc) => {
     expect(doc.data()).toEqual(expenseData);
-    expensesFs.doc(doc.id).delete().then(() => done());
+    expensesFs(uid).doc(doc.id).delete().then(() => done());
   });
 });
 
 test('should add expense with defaults to database and store', (done) => {
-  const store = createMockStore({});
+  const store = createMockStore(defaultAuthState);
   const expenseData = {
     description: '',
     note: '',
@@ -101,11 +104,12 @@ test('should add expense with defaults to database and store', (done) => {
         }
       });
 
-      return expensesFs.doc(actions[0].expense.id).get();
+      // return database.ref(`users/${uid}/expenses/${actions[0].expense.id}`).once('value)
+      return expensesFs(uid).doc(actions[0].expense.id).get();
   })
   .then((doc) => {
     expect(doc.data()).toEqual(expenseData);
-    expensesFs.doc(doc.id).delete().then(() => done());
+    expensesFs(uid).doc(doc.id).delete().then(() => done());
   });
 });
 
@@ -118,7 +122,7 @@ test('should setup setExpenses object with data', () => {
 });
 
 test('should fetch the expenses from firebase', (done) => {
-  const store = createMockStore({});
+  const store = createMockStore(defaultAuthState);
   store.dispatch(startSetExpenses()).then(() => {
     const actions = store.getActions();
     expect(actions[0]).toEqual({
@@ -129,8 +133,8 @@ test('should fetch the expenses from firebase', (done) => {
   });
 });
 
-test('should delete expense from database and store', (done) => {
-  const store = createMockStore({});
+test('should remove expense from database and store', (done) => {
+  const store = createMockStore(defaultAuthState);
   const id = expenses[2].id;
   store.dispatch(startRemoveExpense({ id })).then(() => {
     const actions = store.getActions();
@@ -139,16 +143,17 @@ test('should delete expense from database and store', (done) => {
         id
       });
 
-      return expensesFs.doc(id).get();
+      // return database.ref(`users/${uid}/expenses`).once('value)
+      return expensesFs(uid).doc(id).get();
   })
   .then((doc) => {
-    expect(doc.data()).toEqual(undefined);
+    expect(doc.data()).toBeFalsy();
     done();
   });
 });
 
 test('should edit expense from database and store', (done) => {
-  const store = createMockStore({});
+  const store = createMockStore(defaultAuthState);
   const id = expenses[0].id;
   const updates = {
     description: 'Coffee',
@@ -165,7 +170,7 @@ test('should edit expense from database and store', (done) => {
       });
 
       //return database.ref(`expenses/${id}`).once('value');
-      return expensesFs.doc(id).get();
+      return expensesFs(uid).doc(id).get();
   })
   .then((doc) => {
     expect(doc.data()).toEqual(updates);

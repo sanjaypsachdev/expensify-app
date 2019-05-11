@@ -8,7 +8,8 @@ export const addExpense = (expense) => {
 })};
 
 export const startAddExpense = (expenseData = {}) => {
-  return (dispatch) => {
+  return (dispatch, getState) => {
+    const uid = getState().auth.uid;
     const {
       description = '',
       note = '',
@@ -18,7 +19,7 @@ export const startAddExpense = (expenseData = {}) => {
 
     const expense = { description, note, amount, createdAt };
 
-    return expensesFs
+    return expensesFs(uid)
       .add(expense)
       .then((docRef) => {
         dispatch(addExpense({
@@ -27,7 +28,7 @@ export const startAddExpense = (expenseData = {}) => {
         }));
       });
 
-    // return realtimeDb.ref('expenses')
+    // return realtimeDb.ref(`users/${uid}/expenses`)
     //   .push(expense)
     //   .then((ref) => {
     //     dispatch(addExpense({
@@ -45,9 +46,10 @@ export const removeExpense = ({ id } = {}) => ({
 });
 
 export const startRemoveExpense = ({ id } = {}) => {
-  return (dispatch) => {
-    //return realtimeDb.ref(`expenses/${id}`).remove().then(() => {
-    return expensesFs.doc(id).delete().then(() => {
+  return (dispatch, getState) => {
+    const uid = getState().auth.uid;
+    //return realtimeDb.ref(`users/${uid}/expenses/${id}`).remove().then(() => {
+    return expensesFs(uid).doc(id).delete().then(() => {
       dispatch(removeExpense({ id }));
     });
   };
@@ -61,9 +63,10 @@ export const editExpense = (id, updates) => ({
 });
 
 export const startEditExpense = (id, updates) => {
-  return (dispatch) => {
-    //return realtimeDb.ref(`expenses/${id}`).update(updates).then(() => {
-    return expensesFs.doc(id).update(updates).then(() => {
+  return (dispatch, getState) => {
+    const uid = getState().auth.uid;
+    //return realtimeDb.ref(`users/${uid}/expenses/${id}`).update(updates).then(() => {
+    return expensesFs(uid).doc(id).update(updates).then(() => {
       dispatch(editExpense(id, updates));
     });
   };
@@ -75,9 +78,10 @@ export const setExpenses = (expenses) => ({
 });
 
 export const startSetExpenses = () => {
-  return (dispatch) => {
-    //return realtimeDb.ref('expenses').once('value').then((snapshot) => {
-    return expensesFs.get().then((snapshot) => {
+  return (dispatch, getState) => {
+    const uid = getState().auth.uid;
+    //return realtimeDb.ref(`users/${uid}/expenses).once('value').then((snapshot) => {
+    return expensesFs(uid).get().then((snapshot) => {
       const expenses = [];
 
       snapshot.forEach((childSnapshot) => {
