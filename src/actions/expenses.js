@@ -39,9 +39,21 @@ export const startAddExpense = (expenseData = {}) => {
   };
 };
 
+// SET REMOVE_EXPENSE
+export const setRemoveExpense = ({ id } = {}) => ({
+  type: 'SET_REMOVE_EXPENSE',
+  id
+});
+
 // REMOVE_EXPENSE
 export const removeExpense = ({ id } = {}) => ({
   type: 'REMOVE_EXPENSE',
+  id
+});
+
+// CANCEL REMOVE_EXPENSE
+export const cancelRemoveExpense = ({ id } = {}) => ({
+  type: 'CANCEL_REMOVE_EXPENSE',
   id
 });
 

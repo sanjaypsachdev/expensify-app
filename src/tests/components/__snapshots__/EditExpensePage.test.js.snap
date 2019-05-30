@@ -37,5 +37,17 @@ exports[`should render EditExpensePage correctly 1`] = `
       Remove Expense
     </button>
   </div>
+  <ConnectFunction
+    afterRemoveExpense={[Function]}
+    expenseToDelete={
+      Object {
+        "amount": 195,
+        "createdAt": 0,
+        "description": "Gum",
+        "id": "1",
+        "note": "",
+      }
+    }
+  />
 </div>
 `;

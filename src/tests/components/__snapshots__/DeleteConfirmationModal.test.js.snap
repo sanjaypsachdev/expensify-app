@@ -1,0 +1,42 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render DeleteConfirmationModal correctly 1`] = `
+<Modal
+  ariaHideApp={false}
+  bodyOpenClassName="ReactModal__Body--open"
+  className="modal"
+  closeTimeoutMS={0}
+  contentLabel="Confirm Deletion"
+  isOpen={true}
+  onRequestClose={[Function]}
+  parentSelector={[Function]}
+  portalClassName="ReactModalPortal"
+  role="dialog"
+  shouldCloseOnEsc={true}
+  shouldCloseOnOverlayClick={true}
+  shouldFocusAfterRender={true}
+  shouldReturnFocusAfterClose={true}
+>
+  <h3
+    className="modal__title"
+  >
+    Are you sure you want to delete this expense ?
+  </h3>
+  <div
+    className="modal_buttons"
+  >
+    <button
+      className="button yes"
+      onClick={[Function]}
+    >
+      Yes
+    </button>
+    <button
+      className="button no"
+      onClick={[Function]}
+    >
+      No
+    </button>
+  </div>
+</Modal>
+`;

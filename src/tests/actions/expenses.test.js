@@ -3,7 +3,9 @@ import thunk from 'redux-thunk';
 import { 
   addExpense,
   editExpense,
+  setRemoveExpense,
   removeExpense,
+  cancelRemoveExpense,
   startAddExpense,
   setExpenses,
   startSetExpenses,
@@ -29,10 +31,26 @@ beforeEach((done) => {
   //database.ref(`users/${uid}/expenses`).set(expenseData).then(() => done());
 });
 
+test('should setup set remove expense action object', () => {
+  const action = setRemoveExpense({ id: '123abc' });
+  expect(action).toEqual({
+    type: 'SET_REMOVE_EXPENSE',
+    id: '123abc'
+  });
+});
+
 test('should setup remove expense action object', () => {
   const action = removeExpense({ id: '123abc' });
   expect(action).toEqual({
     type: 'REMOVE_EXPENSE',
+    id: '123abc'
+  });
+});
+
+test('should setup cancel remove expense action object', () => {
+  const action = cancelRemoveExpense({ id: '123abc' });
+  expect(action).toEqual({
+    type: 'CANCEL_REMOVE_EXPENSE',
     id: '123abc'
   });
 });
