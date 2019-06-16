@@ -20,3 +20,10 @@
   margin: 0 0 $m-size 0;
   line-height: 1;
 }
+
+.box-layout__buttons {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  height: $xxl-size;
+}

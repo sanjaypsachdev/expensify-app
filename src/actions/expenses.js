@@ -107,3 +107,9 @@ export const startSetExpenses = () => {
     });
   };
 };
+
+// CLEAR_ALL_EXPENSES
+export const clearAllExpenses = () => {
+  return ({
+  type: 'CLEAR_ALL_EXPENSES'
+})};

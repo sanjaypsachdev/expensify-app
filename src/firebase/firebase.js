@@ -16,6 +16,7 @@ const app = firebase.initializeApp(config);
 
 const database = app.database();
 const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
+const githubAuthProvider = new firebase.auth.GithubAuthProvider();
 
 // const attributes = {
 //   height: 168,
@@ -83,7 +84,7 @@ const db = app.firestore();
 
 const expensesFs = (uid) => db.collection("users").doc(uid).collection("expenses");
 
-export { firebase, googleAuthProvider, expensesFs, db, database as default };
+export { firebase, googleAuthProvider, githubAuthProvider, expensesFs, db, database as default };
 
 // let sanjayDocRef;
 // sanjayDocRef.set(

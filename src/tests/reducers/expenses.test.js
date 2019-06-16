@@ -95,3 +95,11 @@ test('should set expenses', () => {
   const state = expensesReducer(expenses, action);
   expect(state).toEqual([expenses[1]]);
 });
+
+test('should clear all expenses', () => {
+  const action = {
+    type: 'CLEAR_ALL_EXPENSES'
+  };
+  const state = expensesReducer(expenses, action);
+  expect(state).toEqual([]);
+});

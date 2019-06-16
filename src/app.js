@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import AppRouter, { history } from './routers/AppRouter';
 import configureStore from './store/configureStore';
-import { startSetExpenses } from './actions/expenses';
+import { startSetExpenses, clearAllExpenses } from './actions/expenses';
 import { login, logout } from './actions/auth';
 import { firebase } from './firebase/firebase';
 import LoadingPage from './components/LoadingPage';
@@ -37,6 +37,7 @@ firebase.auth().onAuthStateChanged((user) => {
       }
     });
   } else {
+    store.dispatch(clearAllExpenses());
     store.dispatch(logout());
     renderApp();
     history.push('/');
